@@ -132,7 +132,7 @@ class Igrac(Persistent):
         self.karte.extend(self.igra.onDajKarte())
         self.karte = self.sortirajKarte(self.karte)
         for i in range(len(self.karte)):
-            kartaSprite = next((x for x in karteSpritesList if x.karta == self.karte[i]), None)
+            kartaSprite = next((x for x in karteSpritesList if x.karta.slika == self.karte[i].slika), None)
             kartaSprite.pozicioniraj((1000 - (100 * len(self.karte))) / 2 + 100 * i, 566)
             kartaSprite.layer = i
             kartaSprite.prikazi()
@@ -208,6 +208,8 @@ class Igra(Persistent):
         self.redZvanja = PersistentList()
         self.brojBacanja = 0
         self.redBacanja = PersistentList()
+        self.adut = None
+        self.timKojiJeZvao = None
 
         self.mi = 0
         self.vi = 0
@@ -269,13 +271,15 @@ class Igra(Persistent):
         if odluka != False:
             if self.redIgraca[self.redAduti] in self.timovi[0].igraci:
                 self.runda.postaviAdut(odluka, self.timovi[0])
+                self.timKojiJeZvao = self.timovi[0]
             else:
                 self.runda.postaviAdut(odluka, self.timovi[1])
+                self.timKojiJeZvao = self.timovi[1]
+            self.adut = odluka
             transaction.commit()
             #self.pitajIgraceZaZvanje()
             self.bacanje = Bacanje()
             self.runda.dodajBacanje(self.bacanje)
-            self.traziBacanjeKarte()
             self.traziBacanjeKarte()
         else:
             self.redAduti += 1
@@ -338,8 +342,8 @@ class Igra(Persistent):
 
         self.promijeniRedoslijed(1, self.originalniRedIgraca)
         self.redIgraca = self.originalniRedIgraca
-        self.zapocniNovuRundu()
         self.spil = Spil(self.karte, self.boje)
+        self.zapocniNovuRundu()
         transaction.commit()
 
     def onJeLiPoPravilima(self, mojeKarte, kartaKojuZelimOdigrati):
@@ -789,7 +793,7 @@ class Engine():
                         odabraneKarteSprite = [s for s in vidljiveKarteSprites if s.rect.collidepoint(pozicija)]
                         if len(odabraneKarteSprite) > 0 and self.igrac.zastavice['baciKartu'] == 1:
                             valjaniOdabir = self.igrac.baciKartu(
-                                next((x for x in self.igrac.karte if x == odabraneKarteSprite[0].karta), None))
+                                next((x for x in self.igrac.karte if x.slika == odabraneKarteSprite[0].karta.slika), None))
                             if (valjaniOdabir):
                                 vidljiveKarteSprites.remove(odabraneKarteSprite[0])
                         if self.igrac.zastavice['hocuLiZvati'] == 1:
@@ -807,7 +811,7 @@ class Engine():
                 if len(self.igrac.igra.runda.bacanja) > 0:
                     for i in range(len(self.igrac.igra.runda.bacanja[-1].baceneKarte)):
                         self.prozor.blit(next(
-                            (x for x in karteSpritesList if x.karta == self.igrac.igra.runda.bacanja[-1].baceneKarte[i]),
+                            (x for x in karteSpritesList if x.karta.slika == self.igrac.igra.runda.bacanja[-1].baceneKarte[i].slika),
                             None).image, (268 + 80 * i, 233))
                     if self.igrac in self.igrac.igra.tim1.igraci:
                         miRunda = 'Mi runda: ' + str(self.igrac.igra.miRunda)
@@ -849,6 +853,10 @@ class Engine():
                 if self.igrac.igra.runda.adut is not None:
                     self.prozor.blit(next((x for x in adutiObaveznoSprites.sprites() if x.boja == self.igrac.igra.runda.adut), None).image, (850, 0))
                 else:
+                    if self.igrac.igra.adut is not None:
+                        self.igrac.igra.runda.adut = self.igrac.igra.adut
+                        self.igrac.igra.runda.timKojiJeZvao = self.igrac.igra.timKojiJeZvao
+                        transaction.commit()
                     if len(self.igrac.igra.redIgraca) == 4:
                         self.prozor.blit(self.pozadinaKarte, ((1000 - (100 * 8)) / 2 + 100 * 6, 566))
                         self.prozor.blit(self.pozadinaKarte, ((1000 - (100 * 8)) / 2 + 100 * 7, 566))

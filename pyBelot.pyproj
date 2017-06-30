@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{81ccdedb-058a-40ff-8f23-b12d7bcceb24}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>server.py</StartupFile>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId>Global|PythonCore|2.7</InterpreterId>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="server.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="img\1b.png" />
+    <Content Include="img\1h.png" />
+    <Content Include="img\1r.png" />
+    <Content Include="img\1z.png" />
+    <Content Include="img\7b.png" />
+    <Content Include="img\7h.png" />
+    <Content Include="img\7r.png" />
+    <Content Include="img\7z.png" />
+    <Content Include="img\8b.png" />
+    <Content Include="img\8h.png" />
+    <Content Include="img\8r.png" />
+    <Content Include="img\8z.png" />
+    <Content Include="img\9b.png" />
+    <Content Include="img\9h.png" />
+    <Content Include="img\9r.png" />
+    <Content Include="img\9z.png" />
+    <Content Include="img\ab.png" />
+    <Content Include="img\ah.png" />
+    <Content Include="img\ar.png" />
+    <Content Include="img\az.png" />
+    <Content Include="img\back.png" />
+    <Content Include="img\bb.png" />
+    <Content Include="img\bh.png" />
+    <Content Include="img\br.png" />
+    <Content Include="img\bundeva.jpg" />
+    <Content Include="img\bundeva.png" />
+    <Content Include="img\bz.png" />
+    <Content Include="img\db.png" />
+    <Content Include="img\dh.png" />
+    <Content Include="img\dr.png" />
+    <Content Include="img\dz.png" />
+    <Content Include="img\exit.png" />
+    <Content Include="img\herc.jpg" />
+    <Content Include="img\herc.png" />
+    <Content Include="img\kb.png" />
+    <Content Include="img\kh.png" />
+    <Content Include="img\kr.png" />
+    <Content Include="img\kz.png" />
+    <Content Include="img\no.jpg" />
+    <Content Include="img\no.png" />
+    <Content Include="img\search.jpg" />
+    <Content Include="img\start.jpg" />
+    <Content Include="img\table.jpg" />
+    <Content Include="img\zelena.jpg" />
+    <Content Include="img\zelena.png" />
+    <Content Include="img\zir.jpg" />
+    <Content Include="img\zir.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="img" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="Global|PythonCore|2.7" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+</Project>
